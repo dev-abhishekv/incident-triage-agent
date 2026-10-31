@@ -18,6 +18,7 @@ from typing import Any
 
 import httpx
 import yaml
+
 try:
     from google.cloud import bigquery, storage
     HAS_GOOGLE_CLOUD = True

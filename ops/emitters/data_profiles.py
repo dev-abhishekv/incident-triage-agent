@@ -54,8 +54,11 @@ def emit_data_profile(
 
     if client:
         table_id = f"{project}.ops.data_profiles"
-        errors = client.insert_rows_json(table_id, [profile])
-        if errors:
-            print(f"[WARN] Failed to insert profile into {table_id}: {errors}")
+        try:
+            errors = client.insert_rows_json(table_id, [profile])
+            if errors:
+                print(f"[WARN] Failed to insert profile into {table_id}: {errors}")
+        except Exception as e:
+            print(f"[WARN] BigQuery insert error for {table_id}: {e}")
 
     return profile

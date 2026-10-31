@@ -53,8 +53,11 @@ def emit_run_event(
 
     if client:
         table_id = f"{project}.ops.run_events"
-        errors = client.insert_rows_json(table_id, [record])
-        if errors:
-            print(f"[WARN] Failed to insert run event into {table_id}: {errors}")
+        try:
+            errors = client.insert_rows_json(table_id, [record])
+            if errors:
+                print(f"[WARN] Failed to insert run event into {table_id}: {errors}")
+        except Exception as e:
+            print(f"[WARN] BigQuery insert error for {table_id}: {e}")
 
     return record
