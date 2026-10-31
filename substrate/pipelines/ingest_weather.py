@@ -20,6 +20,12 @@ import httpx
 import yaml
 
 try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+try:
     from google.cloud import bigquery, storage
     HAS_GOOGLE_CLOUD = True
 except ImportError:

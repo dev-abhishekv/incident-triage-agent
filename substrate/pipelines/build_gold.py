@@ -16,6 +16,12 @@ from typing import Any
 
 import yaml
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from ops.emitters.data_profiles import emit_data_profile
 from ops.emitters.run_events import emit_run_event
 from substrate.checks.data_quality import DataQualityError, evaluate_gold_checks
