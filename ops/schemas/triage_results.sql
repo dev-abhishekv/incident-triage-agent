@@ -13,3 +13,4 @@ CREATE TABLE IF NOT EXISTS `ops.triage_results` (
   cost_usd FLOAT64,
   run_seq INT64 NOT NULL            -- 1, 2, or 3 (for repeatability evaluation)
 );
+

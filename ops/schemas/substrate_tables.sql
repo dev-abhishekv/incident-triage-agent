@@ -51,3 +51,4 @@ CREATE TABLE IF NOT EXISTS `core.site_daily_summary` (
   summary_generated_at TIMESTAMP NOT NULL
 )
 PARTITION BY partition_date;
+

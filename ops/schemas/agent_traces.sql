@@ -10,3 +10,4 @@ CREATE TABLE IF NOT EXISTS `ops.agent_traces` (
   latency_ms INT64 NOT NULL,
   cost_usd FLOAT64
 );
+

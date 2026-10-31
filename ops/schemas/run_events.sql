@@ -17,3 +17,4 @@ CREATE TABLE IF NOT EXISTS `ops.run_events` (
   config_json JSON
 )
 PARTITION BY DATE(started_at);
+

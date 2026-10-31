@@ -11,3 +11,4 @@ CREATE TABLE IF NOT EXISTS `ops.data_profiles` (
   profiled_at TIMESTAMP NOT NULL
 )
 PARTITION BY partition_date;
+

@@ -7,3 +7,4 @@ CREATE TABLE IF NOT EXISTS `ops.schema_history` (
   is_nullable BOOL NOT NULL,
   schema_version INT64 NOT NULL
 );
+
