@@ -24,8 +24,10 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project               = var.project_id
+  region                = var.region
+  user_project_override = true
+  billing_project       = var.project_id
 }
 
 ###############################################################################
@@ -47,15 +49,21 @@ variable "billing_account" {
   description = "Billing account ID, for the budget alert"
 }
 
-variable "budget_amount_usd" {
+variable "budget_amount_inr" {
   type    = number
-  default = 100
+  default = 2000
 }
 
 variable "alert_email" {
   type        = string
   description = "Email for budget notifications"
   default     = ""
+}
+
+variable "bucket_name" {
+  type        = string
+  description = "GCS raw bucket suffix or full name"
+  default     = "weather-data"
 }
 
 locals {
@@ -121,7 +129,7 @@ resource "google_bigquery_dataset" "datasets" {
 ###############################################################################
 
 resource "google_storage_bucket" "raw" {
-  name                        = "${var.project_id}-${local.name}-raw"
+  name                        = "${var.project_id}-${var.bucket_name}"
   location                    = var.region
   force_destroy               = true
   uniform_bucket_level_access = true
@@ -288,13 +296,13 @@ resource "google_billing_budget" "budget" {
   display_name    = "pipeline-triage-agent"
 
   budget_filter {
-    projects = ["projects/${var.project_id}"]
+    projects = ["projects/649007891540"]
   }
 
   amount {
     specified_amount {
-      currency_code = "USD"
-      units         = tostring(var.budget_amount_usd)
+      currency_code = "INR"
+      units         = tostring(var.budget_amount_inr)
     }
   }
 
