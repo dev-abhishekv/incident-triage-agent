@@ -1,0 +1,142 @@
+# 20 Fixed Plant Coordinates across India for Open-Meteo Ingestion
+# All coordinates are verified against Open-Meteo API (ERA5/GFS models)
+sites:
+  - site_id: "PLANT_01"
+    name: "Bhadla Solar Park"
+    sector: "Renewable Energy"
+    state: "Rajasthan"
+    latitude: 27.5397
+    longitude: 71.9161
+
+  - site_id: "PLANT_02"
+    name: "Jamshedpur Steel Plant"
+    sector: "Metals & Mining"
+    state: "Jharkhand"
+    latitude: 22.8046
+    longitude: 86.2029
+
+  - site_id: "PLANT_03"
+    name: "Jamnagar Refinery"
+    sector: "Oil & Gas"
+    state: "Gujarat"
+    latitude: 22.4707
+    longitude: 70.0577
+
+  - site_id: "PLANT_04"
+    name: "Mundra Thermal Power Plant"
+    sector: "Power Generation"
+    state: "Gujarat"
+    latitude: 22.8396
+    longitude: 69.7250
+
+  - site_id: "PLANT_05"
+    name: "Singrauli Super Thermal Station"
+    sector: "Power Generation"
+    state: "Madhya Pradesh"
+    latitude: 24.1997
+    longitude: 82.6647
+
+  - site_id: "PLANT_06"
+    name: "Kudankulam Nuclear Power Plant"
+    sector: "Nuclear Power"
+    state: "Tamil Nadu"
+    latitude: 8.1697
+    longitude: 77.7126
+
+  - site_id: "PLANT_07"
+    name: "Sriperumbudur Industrial Hub"
+    sector: "Automotive & Electronics"
+    state: "Tamil Nadu"
+    latitude: 12.9692
+    longitude: 79.9482
+
+  - site_id: "PLANT_08"
+    name: "Sanand Manufacturing Cluster"
+    sector: "Automotive"
+    state: "Gujarat"
+    latitude: 22.9858
+    longitude: 72.3789
+
+  - site_id: "PLANT_09"
+    name: "Angul Steel Plant"
+    sector: "Metals & Mining"
+    state: "Odisha"
+    latitude: 20.8400
+    longitude: 85.1000
+
+  - site_id: "PLANT_10"
+    name: "Rourkela Steel Plant"
+    sector: "Metals & Mining"
+    state: "Odisha"
+    latitude: 22.2275
+    longitude: 84.8569
+
+  - site_id: "PLANT_11"
+    name: "Bokaro Steel City"
+    sector: "Metals & Mining"
+    state: "Jharkhand"
+    latitude: 23.6693
+    longitude: 86.1511
+
+  - site_id: "PLANT_12"
+    name: "Bhilai Steel Plant"
+    sector: "Metals & Mining"
+    state: "Chhattisgarh"
+    latitude: 21.1938
+    longitude: 81.3831
+
+  - site_id: "PLANT_13"
+    name: "Visakhapatnam Steel Plant"
+    sector: "Metals & Mining"
+    state: "Andhra Pradesh"
+    latitude: 17.6333
+    longitude: 83.2167
+
+  - site_id: "PLANT_14"
+    name: "Korba Super Thermal Power"
+    sector: "Power Generation"
+    state: "Chhattisgarh"
+    latitude: 22.3595
+    longitude: 82.7501
+
+  - site_id: "PLANT_15"
+    name: "Manesar Industrial Hub"
+    sector: "Automotive"
+    state: "Haryana"
+    latitude: 28.3516
+    longitude: 76.9416
+
+  - site_id: "PLANT_16"
+    name: "Pithampur Industrial Area"
+    sector: "Manufacturing"
+    state: "Madhya Pradesh"
+    latitude: 22.6147
+    longitude: 75.6885
+
+  - site_id: "PLANT_17"
+    name: "Dahej Petrochemical Complex"
+    sector: "Petrochemicals"
+    state: "Gujarat"
+    latitude: 21.7119
+    longitude: 72.5855
+
+  - site_id: "PLANT_18"
+    name: "Hosur Industrial Complex"
+    sector: "Manufacturing & Auto"
+    state: "Tamil Nadu"
+    latitude: 12.7409
+    longitude: 77.8253
+
+  - site_id: "PLANT_19"
+    name: "Rewa Ultra Mega Solar"
+    sector: "Renewable Energy"
+    state: "Madhya Pradesh"
+    latitude: 24.4789
+    longitude: 81.5750
+
+  - site_id: "PLANT_20"
+    name: "Pavagada Solar Park"
+    sector: "Renewable Energy"
+    state: "Karnataka"
+    latitude: 14.2811
+    longitude: 77.4144
