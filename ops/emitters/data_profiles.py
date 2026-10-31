@@ -37,7 +37,7 @@ def emit_data_profile(
             non_nulls = [v for v in vals if v is not None]
             distinct_counts[k] = len(set(non_nulls))
 
-            if non_nulls and isinstance(non_nulls[0], (int, float)):
+            if non_nulls and isinstance(non_nulls[0], int | float):
                 min_max[k] = {"min": min(non_nulls), "max": max(non_nulls)}
 
     profile = {

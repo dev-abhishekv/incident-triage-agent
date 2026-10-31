@@ -18,6 +18,7 @@ import yaml
 
 try:
     from dotenv import load_dotenv
+
     load_dotenv()
 except ImportError:
     pass
@@ -28,6 +29,7 @@ from substrate.checks.data_quality import DataQualityError, evaluate_gold_checks
 
 try:
     from google.cloud import bigquery
+
     HAS_BIGQUERY = True
 except ImportError:
     bigquery = None  # type: ignore[assignment]

@@ -4,4 +4,3 @@ CREATE TABLE IF NOT EXISTS `ops.lineage` (
   upstream_table STRING NOT NULL,
   dependency_type STRING NOT NULL -- 'DIRECT' | 'JOIN' | 'TRANSFORM'
 );
-

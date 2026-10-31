@@ -11,4 +11,3 @@ infra/*.tfvars
 infra/.terraform.lock.hcl
 .env
 data/
-

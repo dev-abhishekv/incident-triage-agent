@@ -40,8 +40,8 @@ variable "project_id" {
 }
 
 variable "region" {
-  type        = string
-  default     = "asia-south1" # Mumbai — lowest latency from Bengaluru
+  type    = string
+  default = "asia-south1" # Mumbai — lowest latency from Bengaluru
 }
 
 variable "billing_account" {
@@ -371,7 +371,7 @@ resource "google_cloud_run_v2_job" "substrate" {
 
 resource "google_cloud_scheduler_job" "daily" {
   name      = "${local.name}-daily"
-  schedule  = "30 1 * * *"   # 07:00 IST
+  schedule  = "30 1 * * *" # 07:00 IST
   time_zone = "Asia/Kolkata"
 
   http_target {

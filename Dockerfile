@@ -16,4 +16,3 @@ RUN mkdir -p eval && touch eval/__init__.py
 RUN pip install --no-cache-dir .
 
 ENTRYPOINT ["python", "-m", "substrate.entrypoint"]
-

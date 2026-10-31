@@ -12,6 +12,7 @@ from datetime import date, timedelta
 
 try:
     from dotenv import load_dotenv
+
     load_dotenv()
 except ImportError:
     pass

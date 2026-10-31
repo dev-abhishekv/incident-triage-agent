@@ -8,14 +8,14 @@ import yaml
 def test_validate_all_sites():
     config_path = Path("config/sites.yaml")
     assert config_path.exists(), "config/sites.yaml missing"
-    
+
     with open(config_path) as f:
         data = yaml.safe_load(f)
-    
+
     sites = data.get("sites", [])
     print(f"Loaded {len(sites)} sites from config/sites.yaml")
     assert len(sites) == 20, f"Expected 20 sites, got {len(sites)}"
-    
+
     url = "https://api.open-meteo.com/v1/forecast"
     passed = 0
     with httpx.Client(timeout=20.0) as client:
@@ -25,7 +25,7 @@ def test_validate_all_sites():
                 "longitude": s["longitude"],
                 "hourly": "temperature_2m,relative_humidity_2m,precipitation",
                 "past_days": 1,
-                "forecast_days": 1
+                "forecast_days": 1,
             }
             # Retry loop for resilient validation
             for attempt in range(3):
@@ -47,6 +47,7 @@ def test_validate_all_sites():
 
     print(f"\nAll {passed}/20 sites successfully verified against live Open-Meteo API!")
     assert passed == 20
+
 
 if __name__ == "__main__":
     test_validate_all_sites()

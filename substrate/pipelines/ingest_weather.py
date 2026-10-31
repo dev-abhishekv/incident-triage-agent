@@ -21,12 +21,14 @@ import yaml
 
 try:
     from dotenv import load_dotenv
+
     load_dotenv()
 except ImportError:
     pass
 
 try:
     from google.cloud import bigquery, storage
+
     HAS_GOOGLE_CLOUD = True
 except ImportError:
     bigquery = None  # type: ignore[assignment]
@@ -77,9 +79,7 @@ def fetch_site_weather(
             time.sleep(0.5)
         except httpx.RequestError as exc:
             if attempt == max_retries - 1:
-                raise RuntimeError(
-                    f"Failed to fetch weather for {site['site_id']}: {exc}"
-                ) from exc
+                raise RuntimeError(f"Failed to fetch weather for {site['site_id']}: {exc}") from exc
             time.sleep(1.0)
     raise RuntimeError(f"Open-Meteo returned status {resp.status_code} for {site['site_id']}")
 
@@ -216,9 +216,7 @@ def run_ingest_pipeline(
     start_date = target_date - timedelta(days=(backfill_days - 1)) if backfill_days else target_date
     end_date = target_date
 
-    print(
-        f"[PIPELINE A] Starting run {run_id} for {start_date} to {end_date} ({len(sites)} sites)"
-    )
+    print(f"[PIPELINE A] Starting run {run_id} for {start_date} to {end_date} ({len(sites)} sites)")
 
     bq_client = None
     storage_client = None
