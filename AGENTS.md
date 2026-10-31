@@ -19,3 +19,4 @@ This repository implements an autonomous Incident Triage Agent for data pipeline
    - All diagnosis methods must implement `TriageStrategy`.
    - `ops.*` BigQuery schemas are immutable contracts; never widen columns without explicit design review.
    - Tools are strictly read-only and return structured evidence.
+

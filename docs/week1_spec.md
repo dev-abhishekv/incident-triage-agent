@@ -245,8 +245,6 @@ Tick all before starting week 2. Anything unticked becomes a blocker later, not 
 - [ ] `ops.triage_results` and `ops.agent_traces` created with full column sets, empty is fine
 - [ ] Spend under 5 USD
 - [ ] Repo public, README stub committed
-- [ ] In-progress project line added to resume
-- [ ] 15 targeted applications sent, 10 referral messages sent
 
 ---
 
