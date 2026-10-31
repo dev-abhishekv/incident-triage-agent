@@ -240,7 +240,7 @@ Tick all before starting week 2. Anything unticked becomes a blocker later, not 
 - [x] `triage/contracts.py` committed; the six contract scenarios pass as pytest tests
 - [x] `TriageStrategy` protocol committed in `triage/strategy.py`
 - [x] 60 partitions present in `core.daily_site_weather`
-- [ ] At least one unattended scheduled run visible in `ops.run_events`
+- [x] At least one unattended scheduled run visible in `ops.run_events`
 - [x] `ops.run_events`, `ops.schema_history`, `ops.data_profiles`, `ops.lineage` all non-empty
 - [x] `ops.triage_results` and `ops.agent_traces` created with full column sets, empty is fine
 - [x] Spend under 5 USD (verified with GCP budget)

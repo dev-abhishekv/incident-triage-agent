@@ -115,7 +115,7 @@ incident-triage-agent/
 
 | Phase | Timeline | Focus | Deliverables | Status |
 |:---:|:---:|:---|:---|:---:|
-| **Week 1** | Oct 18 – Oct 24 | **Substrate & Contracts** | GCP Terraform foundation, Pydantic contracts, Open-Meteo pipelines, 60-day backfill | 🟡 In Progress |
+| **Week 1** | Oct 18 – Oct 24 | **Substrate & Contracts** | GCP Terraform foundation, Pydantic contracts, Open-Meteo pipelines, 60-day backfill, Cloud Run & Scheduler | 🟢 Completed |
 | **Week 2** | Oct 25 – Oct 31 | **Metadata & Baseline** | 4 `ops.*` tables, 9 diagnostic tools with unit tests, 12-rule baseline | ⚪ Pending |
 | **Week 3** | Nov 01 – Nov 07 | **LangGraph Agent** | Graph orchestration, bounded tool loops, GenAI OTel trace capture | ⚪ Pending |
 | **Week 4** | Nov 08 – Nov 14 | **Faults & Evaluation** | 20 composable fault injectors, eval runner (3 repeats), baseline vs. agent report | ⚪ Pending |

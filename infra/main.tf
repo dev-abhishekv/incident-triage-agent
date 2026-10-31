@@ -330,54 +330,62 @@ output "run_events_topic" { value = google_pubsub_topic.run_events.name }
 output "incidents_topic" { value = google_pubsub_topic.incidents.name }
 
 ###############################################################################
-# Week 1, after the first image is pushed — uncomment and apply
+# Week 1: Cloud Run Job and Daily Scheduler
 ###############################################################################
-#
-# resource "google_cloud_run_v2_job" "substrate" {
-#   name     = "${local.name}-substrate"
-#   location = var.region
-#
-#   template {
-#     template {
-#       service_account = google_service_account.pipeline.email
-#       max_retries     = 1
-#       timeout         = "900s"
-#
-#       containers {
-#         image = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.images.repository_id}/substrate:latest"
-#         resources {
-#           limits = { cpu = "1", memory = "2Gi" }
-#         }
-#         env {
-#           name  = "RAW_BUCKET"
-#           value = google_storage_bucket.raw.name
-#         }
-#         env {
-#           name  = "RUN_EVENTS_TOPIC"
-#           value = google_pubsub_topic.run_events.id
-#         }
-#       }
-#     }
-#   }
-# }
-#
-# resource "google_cloud_scheduler_job" "daily" {
-#   name      = "${local.name}-daily"
-#   schedule  = "30 1 * * *"   # 07:00 IST
-#   time_zone = "Asia/Kolkata"
-#
-#   http_target {
-#     http_method = "POST"
-#     uri         = "https://${var.region}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${var.project_id}/jobs/${google_cloud_run_v2_job.substrate.name}:run"
-#     oauth_token {
-#       service_account_email = google_service_account.scheduler.email
-#     }
-#   }
-# }
-#
-# resource "google_cloud_run_v2_job_iam_member" "scheduler_invoke" {
-#   name   = google_cloud_run_v2_job.substrate.name
-#   location = var.region
-#   role   = "roles/run.invoker"
-#   member = "serviceAccount:${google_service_account.scheduler.email}"
-# }
+
+resource "google_cloud_run_v2_job" "substrate" {
+  name     = "${local.name}-substrate"
+  location = var.region
+
+  template {
+    template {
+      service_account = google_service_account.pipeline.email
+      max_retries     = 1
+      timeout         = "900s"
+
+      containers {
+        image = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.images.repository_id}/substrate:latest"
+        resources {
+          limits = { cpu = "1", memory = "2Gi" }
+        }
+        env {
+          name  = "GCP_PROJECT"
+          value = var.project_id
+        }
+        env {
+          name  = "GCS_RAW_BUCKET"
+          value = google_storage_bucket.raw.name
+        }
+        env {
+          name  = "RAW_BUCKET"
+          value = google_storage_bucket.raw.name
+        }
+        env {
+          name  = "RUN_EVENTS_TOPIC"
+          value = google_pubsub_topic.run_events.id
+        }
+      }
+    }
+  }
+}
+
+resource "google_cloud_scheduler_job" "daily" {
+  name      = "${local.name}-daily"
+  schedule  = "30 1 * * *"   # 07:00 IST
+  time_zone = "Asia/Kolkata"
+
+  http_target {
+    http_method = "POST"
+    uri         = "https://${var.region}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${var.project_id}/jobs/${google_cloud_run_v2_job.substrate.name}:run"
+    oauth_token {
+      service_account_email = google_service_account.scheduler.email
+    }
+  }
+}
+
+resource "google_cloud_run_v2_job_iam_member" "scheduler_invoke" {
+  name     = google_cloud_run_v2_job.substrate.name
+  location = var.region
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${google_service_account.scheduler.email}"
+}

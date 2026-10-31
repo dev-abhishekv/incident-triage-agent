@@ -368,7 +368,7 @@ That single sentence is the most valuable artifact in this project. It demonstra
 - [x] **Define Pydantic contracts and `TriageStrategy` interface (§1a, §1b) — 45 min, do it first**
 - [x] Pipeline A: API → GCS → bronze → silver (3h)
 - [x] Pipeline B: gold join + data checks (2h)
-- [ ] Scheduler → Workflows → Run Jobs, deployed and running daily (1h)
+- [x] Scheduler → Workflows → Run Jobs, deployed and running daily (1h)
 - [x] Backfill 60 days (0.5h)
 
 ### Week 2 · 25–31 Oct · ~9 hrs — Metadata, tools, baseline
