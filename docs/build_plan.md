@@ -362,16 +362,14 @@ That single sentence is the most valuable artifact in this project. It demonstra
 ## 9. Schedule
 
 ### Week 1 · 18–24 Oct · ~9 hrs — Substrate
-- [ ] GCP project, billing alerts at $50 and $100, enable APIs (1h)
-- [ ] Check **Billing → Credits** for eligible SKUs and expiry date
-- [ ] Repo, `uv`, ruff, pytest, GitHub Actions skeleton (1h)
-- [ ] **Define Pydantic contracts and `TriageStrategy` interface (§1a, §1b) — 45 min, do it first**
-- [ ] Pipeline A: API → GCS → bronze → silver (3h)
-- [ ] Pipeline B: gold join + data checks (2h)
-- [ ] Scheduler → Workflows → Run Jobs, deployed and running daily (1h)
-- [ ] Backfill 60 days (0.5h)
-
-**Also this week, not on this list:** 15 targeted applications and 10 referral messages. Add the in-progress project line to your resume today.
+- [x] GCP project, billing alerts at $50 and $100 (configured in INR), enable APIs (1h)
+- [x] Check **Billing → Credits** for eligible SKUs and expiry date
+- [x] Repo, `uv`, ruff, pytest, GitHub Actions skeleton (1h)
+- [x] **Define Pydantic contracts and `TriageStrategy` interface (§1a, §1b) — 45 min, do it first**
+- [x] Pipeline A: API → GCS → bronze → silver (3h)
+- [x] Pipeline B: gold join + data checks (2h)
+- [x] Scheduler → Workflows → Run Jobs, deployed and running daily (1h)
+- [x] Backfill 60 days (0.5h)
 
 ### Week 2 · 25–31 Oct · ~9 hrs — Metadata, tools, baseline
 - [ ] Four `ops.*` tables, including `strategy` and `routing_policy` columns from the start (§1a) (3h)

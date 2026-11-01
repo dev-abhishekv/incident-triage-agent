@@ -24,8 +24,10 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project               = var.project_id
+  region                = var.region
+  user_project_override = true
+  billing_project       = var.project_id
 }
 
 ###############################################################################
@@ -38,8 +40,8 @@ variable "project_id" {
 }
 
 variable "region" {
-  type        = string
-  default     = "asia-south1" # Mumbai — lowest latency from Bengaluru
+  type    = string
+  default = "asia-south1" # Mumbai — lowest latency from Bengaluru
 }
 
 variable "billing_account" {
@@ -47,15 +49,21 @@ variable "billing_account" {
   description = "Billing account ID, for the budget alert"
 }
 
-variable "budget_amount_usd" {
+variable "budget_amount_inr" {
   type    = number
-  default = 100
+  default = 2000
 }
 
 variable "alert_email" {
   type        = string
   description = "Email for budget notifications"
   default     = ""
+}
+
+variable "bucket_name" {
+  type        = string
+  description = "GCS raw bucket suffix or full name"
+  default     = "weather-data"
 }
 
 locals {
@@ -121,7 +129,7 @@ resource "google_bigquery_dataset" "datasets" {
 ###############################################################################
 
 resource "google_storage_bucket" "raw" {
-  name                        = "${var.project_id}-${local.name}-raw"
+  name                        = "${var.project_id}-${var.bucket_name}"
   location                    = var.region
   force_destroy               = true
   uniform_bucket_level_access = true
@@ -288,13 +296,13 @@ resource "google_billing_budget" "budget" {
   display_name    = "pipeline-triage-agent"
 
   budget_filter {
-    projects = ["projects/${var.project_id}"]
+    projects = ["projects/649007891540"]
   }
 
   amount {
     specified_amount {
-      currency_code = "USD"
-      units         = tostring(var.budget_amount_usd)
+      currency_code = "INR"
+      units         = tostring(var.budget_amount_inr)
     }
   }
 
@@ -322,54 +330,62 @@ output "run_events_topic" { value = google_pubsub_topic.run_events.name }
 output "incidents_topic" { value = google_pubsub_topic.incidents.name }
 
 ###############################################################################
-# Week 1, after the first image is pushed — uncomment and apply
+# Week 1: Cloud Run Job and Daily Scheduler
 ###############################################################################
-#
-# resource "google_cloud_run_v2_job" "substrate" {
-#   name     = "${local.name}-substrate"
-#   location = var.region
-#
-#   template {
-#     template {
-#       service_account = google_service_account.pipeline.email
-#       max_retries     = 1
-#       timeout         = "900s"
-#
-#       containers {
-#         image = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.images.repository_id}/substrate:latest"
-#         resources {
-#           limits = { cpu = "1", memory = "2Gi" }
-#         }
-#         env {
-#           name  = "RAW_BUCKET"
-#           value = google_storage_bucket.raw.name
-#         }
-#         env {
-#           name  = "RUN_EVENTS_TOPIC"
-#           value = google_pubsub_topic.run_events.id
-#         }
-#       }
-#     }
-#   }
-# }
-#
-# resource "google_cloud_scheduler_job" "daily" {
-#   name      = "${local.name}-daily"
-#   schedule  = "30 1 * * *"   # 07:00 IST
-#   time_zone = "Asia/Kolkata"
-#
-#   http_target {
-#     http_method = "POST"
-#     uri         = "https://${var.region}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${var.project_id}/jobs/${google_cloud_run_v2_job.substrate.name}:run"
-#     oauth_token {
-#       service_account_email = google_service_account.scheduler.email
-#     }
-#   }
-# }
-#
-# resource "google_cloud_run_v2_job_iam_member" "scheduler_invoke" {
-#   name   = google_cloud_run_v2_job.substrate.name
-#   location = var.region
-#   role   = "roles/run.invoker"
-#   member = "serviceAccount:${google_service_account.scheduler.email}"
-# }
+
+resource "google_cloud_run_v2_job" "substrate" {
+  name     = "${local.name}-substrate"
+  location = var.region
+
+  template {
+    template {
+      service_account = google_service_account.pipeline.email
+      max_retries     = 1
+      timeout         = "900s"
+
+      containers {
+        image = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.images.repository_id}/substrate:latest"
+        resources {
+          limits = { cpu = "1", memory = "2Gi" }
+        }
+        env {
+          name  = "GCP_PROJECT"
+          value = var.project_id
+        }
+        env {
+          name  = "GCS_RAW_BUCKET"
+          value = google_storage_bucket.raw.name
+        }
+        env {
+          name  = "RAW_BUCKET"
+          value = google_storage_bucket.raw.name
+        }
+        env {
+          name  = "RUN_EVENTS_TOPIC"
+          value = google_pubsub_topic.run_events.id
+        }
+      }
+    }
+  }
+}
+
+resource "google_cloud_scheduler_job" "daily" {
+  name      = "${local.name}-daily"
+  schedule  = "30 1 * * *" # 07:00 IST
+  time_zone = "Asia/Kolkata"
+
+  http_target {
+    http_method = "POST"
+    uri         = "https://${var.region}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${var.project_id}/jobs/${google_cloud_run_v2_job.substrate.name}:run"
+    oauth_token {
+      service_account_email = google_service_account.scheduler.email
+    }
+  }
+}
+
+resource "google_cloud_run_v2_job_iam_member" "scheduler_invoke" {
+  name     = google_cloud_run_v2_job.substrate.name
+  location = var.region
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${google_service_account.scheduler.email}"
+}

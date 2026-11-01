@@ -63,9 +63,9 @@ flowchart TD
 
 ## 🎯 Key Architectural Principles
 
-1. **Strict Typed Boundaries (Zero Hallucination Leaks):**  
+1. **Strict Typed Boundaries (Zero Hallucination Leaks):**
    Every boundary (tool inputs, tool outputs, `Incident`, `TriageResult`) is enforced with strict Pydantic models (`extra="forbid"`). Tools are strictly read-only and return structured evidence.
-2. **Strategy Pattern (`TriageStrategy` Protocol):**  
+2. **Strategy Pattern (`TriageStrategy` Protocol):**
    The eval harness is agnostic to the engine. The rule baseline, LangGraph, and Google ADK all conform to:
    ```python
    class TriageStrategy(Protocol):
@@ -73,9 +73,9 @@ flowchart TD
        routing_policy: str  # all_cheap | all_premium | tiered
        def diagnose(self, incident: Incident) -> TriageResult: ...
    ```
-3. **Loud vs. Silent Failure Evaluation:**  
+3. **Loud vs. Silent Failure Evaluation:**
    Evaluated against 20 injected faults. While deterministic rules catch loud crashes (e.g., OOM, 403, syntax errors), the agent proves its value on **silent faults** (schema additions, timezone shifts, unit conversions °C $\rightarrow$ °F, sentinel values, duplicate keys).
-4. **Cost-Aware Model Routing:**  
+4. **Cost-Aware Model Routing:**
    Every reasoning step is traced using OpenTelemetry GenAI semantics into `ops.agent_traces`. We benchmark **tiered routing** (cheap Flash model for evidence gathering + Pro model for reasoning) against all-Flash and all-Pro baselines.
 
 ---
@@ -115,7 +115,7 @@ incident-triage-agent/
 
 | Phase | Timeline | Focus | Deliverables | Status |
 |:---:|:---:|:---|:---|:---:|
-| **Week 1** | Oct 18 – Oct 24 | **Substrate & Contracts** | GCP Terraform foundation, Pydantic contracts, Open-Meteo pipelines, 60-day backfill | 🟡 In Progress |
+| **Week 1** | Oct 18 – Oct 24 | **Substrate & Contracts** | GCP Terraform foundation, Pydantic contracts, Open-Meteo pipelines, 60-day backfill, Cloud Run & Scheduler | 🟢 Completed |
 | **Week 2** | Oct 25 – Oct 31 | **Metadata & Baseline** | 4 `ops.*` tables, 9 diagnostic tools with unit tests, 12-rule baseline | ⚪ Pending |
 | **Week 3** | Nov 01 – Nov 07 | **LangGraph Agent** | Graph orchestration, bounded tool loops, GenAI OTel trace capture | ⚪ Pending |
 | **Week 4** | Nov 08 – Nov 14 | **Faults & Evaluation** | 20 composable fault injectors, eval runner (3 repeats), baseline vs. agent report | ⚪ Pending |

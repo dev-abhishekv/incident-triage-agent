@@ -27,4 +27,3 @@ Run this workflow whenever:
 
 ### 3. Verify Code Docstrings
 - Ensure every newly created tool in `triage/tools/` has a clear, stranger-readable docstring and explicit `Field(description=...)` attributes on input models.
-

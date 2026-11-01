@@ -10,7 +10,8 @@ This repository implements an autonomous Incident Triage Agent for data pipeline
    - Never let docstrings or schemas drift from implementation.
 
 2. **Automated Git Commits & PRs (`git-workflow` skill):**
-   - After completing any distinct functional milestone or test-verified feature, automatically run `git add` and commit with a clean Conventional Commit message (e.g. `feat(contracts): ...`, `test(contracts): ...`, `docs(readme): ...`).
+   - Synchronize with the user's review lifecycle: do not execute premature `git commit` within the exact same turn that writes the files if pending user review exists.
+   - At the beginning of each turn or after verification, inspect `git status`, stage accepted modifications, and commit with a clean Conventional Commit message (e.g. `feat(substrate): ...`, `test(gold): ...`).
    - Ensure tests pass (`pytest`) and code passes linting (`ruff check`) before committing.
    - When completing a phase/milestone, create a feature branch (e.g. `feat/week-1-substrate`) and format a GitHub-ready PR summary.
 
@@ -19,4 +20,3 @@ This repository implements an autonomous Incident Triage Agent for data pipeline
    - All diagnosis methods must implement `TriageStrategy`.
    - `ops.*` BigQuery schemas are immutable contracts; never widen columns without explicit design review.
    - Tools are strictly read-only and return structured evidence.
-
